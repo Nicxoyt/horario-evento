@@ -2,179 +2,178 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Agenda Animada</title>
+<title>evento</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #1e3c72, #2a5298);
-        color: white;
-        text-align: center;
-        overflow-x: hidden;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    h1 {
-        font-size: 3.5rem;
-        margin-top: 40px;
-        animation: slideDown 1.2s ease;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    background: url('fortnite.gif') center / cover no-repeat;
+    font-family: 'Anton', sans-serif;
+    color: white;
+    overflow: hidden;
 
-    .hora {
-        font-size: 1.5rem;
-        opacity: 0.85;
-        animation: fadeIn 2s ease;
-    }
+    image-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-    .botones {
-        margin-top: 50px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 25px;
-        animation: fadeInUp 1.5s ease;
-    }
+.overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at center, rgba(0,0,0,0.25), rgba(0,0,0,0.75)),
+        linear-gradient(to top, rgba(0,0,0,0.45), transparent);
+    backdrop-filter: blur(1.5px);
+}
 
-    button {
-        background: #ffcc00;
-        border: none;
-        border-radius: 20px;
-        padding: 25px 30px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.3s, box-shadow 0.3s;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        min-width: 260px;
-    }
+.container {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 1.5s ease;
+}
 
-    button:hover {
-        transform: scale(1.08);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-    }
+.estado {
+    font-size: 3.8rem;
+    text-shadow: 0 0 12px #00ffff, 0 0 30px #00ffff;
+    margin-bottom: 30px;
+}
 
-    .info {
-        margin: 40px auto;
-        max-width: 700px;
-        font-size: 1.3rem;
-        background: rgba(0,0,0,0.35);
-        padding: 25px;
-        border-radius: 20px;
-        display: none;
-        animation: popIn 0.6s ease;
-    }
+.contador {
+    display: flex;
+    gap: 40px;
+    animation: zoomIn 1.2s ease;
+}
 
-    @keyframes slideDown {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
+.bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+.numero {
+    font-size: 6.5rem;
+    line-height: 1;
+    text-shadow: 0 0 12px #00ffff, 0 0 35px #00ffff;
+}
 
-    @keyframes fadeInUp {
-        from { transform: translateY(40px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
+.label {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    opacity: 0.9;
+}
 
-    @keyframes popIn {
-        from { transform: scale(0.8); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
+.hora {
+    margin-top: 35px;
+    font-size: 1.3rem;
+    opacity: 0.85;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .estado { font-size: 2.6rem; }
+    .numero { font-size: 4.5rem; }
+    .contador { gap: 20px; }
+}
 </style>
 </head>
 
 <body>
+<div class="overlay"></div>
 
-<h1 id="estado"></h1>
-<div class="hora" id="horaActual"></div>
+<div class="container">
+    <div class="estado" id="estado"></div>
 
-<div class="botones" id="botones">
-    <button onclick="mostrarInfo('inicio')">1:00 PM - 5:30 PM</button>
-    <button onclick="mostrarInfo('novenas')">5:30 PM - 6:00 PM</button>
-    <button onclick="mostrarInfo('videojuegos')">6:00 PM - 7:30 PM</button>
-    <button onclick="mostrarInfo('queso')">7:30 PM - 7:40 PM</button>
-    <button onclick="mostrarInfo('comer')">7:40 PM - 8:00 PM</button>
-    <button onclick="mostrarInfo('libre')">8:00 PM - 10:00 PM</button>
+    <div class="contador" id="contador">
+        <div class="bloque">
+            <div class="numero" id="d">00</div>
+            <div class="label">DAY</div>
+        </div>
+        <div class="bloque">
+            <div class="numero" id="h">00</div>
+            <div class="label">HRS</div>
+        </div>
+        <div class="bloque">
+            <div class="numero" id="m">00</div>
+            <div class="label">MIN</div>
+        </div>
+        <div class="bloque">
+            <div class="numero" id="s">00</div>
+            <div class="label">SEC</div>
+        </div>
+    </div>
+
+    <div class="hora" id="horaActual"></div>
 </div>
 
-<div class="info" id="info"></div>
-
 <script>
-const botones = document.getElementById("botones");
-const estado = document.getElementById("estado");
-
-function actualizarHora() {
+function actualizar() {
     const ahora = new Date();
+
     document.getElementById("horaActual").innerText =
         "Hora actual: " + ahora.toLocaleTimeString();
 
-    const evento = new Date(ahora.getFullYear(), 11, 19); // 19 de diciembre
-    evento.setHours(0,0,0,0);
+    const inicioContador = new Date(ahora.getFullYear(), 11, 16, 0, 0, 0); // 16 dic
+    const eventoFinal = new Date(ahora.getFullYear(), 11, 19, 17, 0, 0);   // 19 dic 5:00 PM
 
-    const hoy = new Date(ahora);
-    hoy.setHours(0,0,0,0);
+    const estado = document.getElementById("estado");
+    const contador = document.getElementById("contador");
 
-    const totalMin = ahora.getHours() * 60 + ahora.getMinutes();
-
-    // ANTES DEL EVENTO
-    if (hoy < evento) {
+    // Antes del 16
+    if (ahora < inicioContador) {
         estado.innerText = "HOY NO ES EL DÍA DEL EVENTO";
-        botones.style.display = "none";
+        contador.style.display = "none";
         return;
     }
 
-    // DÍA DEL EVENTO - ANTES DE LA 1:00 PM
-    if (hoy.getTime() === evento.getTime() && totalMin < 13 * 60) {
-        estado.innerText = "HOY ES EL DÍA DEL EVENTO 🎉";
-        botones.style.display = "none";
+    // Durante el contador (16 → 19)
+    if (ahora >= inicioContador && ahora < eventoFinal) {
+        estado.innerText = "EL EVENTO FINAL COMIENZA EN";
+        contador.style.display = "flex";
+
+        const diff = eventoFinal - ahora;
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("d").innerText = String(d).padStart(2, "0");
+        document.getElementById("h").innerText = String(h).padStart(2, "0");
+        document.getElementById("m").innerText = String(m).padStart(2, "0");
+        document.getElementById("s").innerText = String(s).padStart(2, "0");
         return;
     }
 
-    // DESDE LA 1:00 PM EN ADELANTE (HORARIO NORMAL)
-    botones.style.display = "flex";
-
-    if (totalMin >= 13*60 && totalMin < 17*60 + 30) {
-        estado.innerText = "Aún no inicia";
-    } else if (totalMin >= 17*60 + 30 && totalMin < 18*60) {
-        estado.innerText = "Novenas";
-    } else if (totalMin >= 18*60 && totalMin < 19*60 + 30) {
-        estado.innerText = "Videojuegos y preparación de la comida";
-    } else if (totalMin >= 19*60 + 30 && totalMin < 19*60 + 40) {
-        estado.innerText = "Discusión del precio del queso 🧀";
-    } else if (totalMin >= 19*60 + 40 && totalMin < 20*60) {
-        estado.innerText = "Hora de comer 🍽️";
-    } else if (totalMin >= 20*60 && totalMin <= 22*60) {
-        estado.innerText = "Tiempo libre 😎";
-    } else {
-        estado.innerText = "Fuera del horario";
-    }
+    // Evento iniciado
+    estado.innerText = "🔥 EL EVENTO HA COMENZADO 🔥";
+    contador.style.display = "none";
 }
 
-function mostrarInfo(tipo) {
-    const info = document.getElementById("info");
-    info.style.display = "block";
-
-    const textos = {
-        inicio: "Tiempo de espera estratégica mientras todo se prepara.",
-        novenas: "Momento solemne y organizado para compartir en calma.",
-        videojuegos: "Diversión máxima mientras se coordina la comida.",
-        queso: "Debate crítico con argumentos económicos muy serios.",
-        comer: "Consumo oficial de alimentos sin interrupciones.",
-        libre: "Libertad total para hacer lo que quieras."
-    };
-
-    info.innerText = textos[tipo];
-    info.style.animation = "none";
-    info.offsetHeight;
-    info.style.animation = "popIn 0.6s ease";
-}
-
-actualizarHora();
-setInterval(actualizarHora, 1000);
+actualizar();
+setInterval(actualizar, 1000);
 </script>
 
 </body>
